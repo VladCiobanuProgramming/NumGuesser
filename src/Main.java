@@ -4,29 +4,39 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Random rand = new Random();
-        int RandomGeneratedNumber = rand.nextInt(100) + 1;
-        Scanner scanner = new Scanner(System.in); // Integrating scanner type as user input
-        System.out.println("This is \u001b[35;1mNumGuesser\u001b[0m . A number guesser from 1 to 100.?");
-        System.out.println("Can you guess the right number?");
-        int NumberGuessed;
-        NumberGuessed = scanner.nextInt();
-        while (NumberGuessed==(int) NumberGuessed) {
-            if (NumberGuessed < RandomGeneratedNumber) {
-                System.out.println("Input is \u001b[31;4msmaller\u001b[0m than generated number.");
-                NumberGuessed = scanner.nextInt();
-            }
-                if (NumberGuessed > RandomGeneratedNumber){
-                    System.out.println("Input is \u001b[32;4mlarger\u001b[0m than generated number.");
-                    NumberGuessed = scanner.nextInt();
-                }
-                if(NumberGuessed==RandomGeneratedNumber){
-                    System.out.printf("You guessed right ! %d was the generated number." , RandomGeneratedNumber);
-                    break;
-                }
-                else if(NumberGuessed<=0 || NumberGuessed>=101){
-                    System.out.println("Not a number 1-100.");
-            }
+        int randomGeneratedNumber = rand.nextInt(100) + 1;
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Number guessing game");
+
+        int numberGuessed = 0;
+
+        while (true) {
+            System.out.print("Enter your guess (1-100): ");
+
+            if (scanner.hasNextInt()) {
+                numberGuessed = scanner.nextInt();
+
+                if (numberGuessed < 1 || numberGuessed > 100) {
+                    System.out.println("invalid range, try again.");
+                    continue; // Skip the rest of the loop and prompt again
+                }
+
+                if (numberGuessed < randomGeneratedNumber) {
+                    System.out.println("guess higher");
+                } else if (numberGuessed > randomGeneratedNumber) {
+                    System.out.println("guess lower");
+                } else {
+                    System.out.printf("You guessed right! %d was the generated number.%n", randomGeneratedNumber);
+                    break; // Exit the loop
+                }
+            } 
+            else {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scanner.next();
+            }
         }
+
+        scanner.close();
     }
 }
